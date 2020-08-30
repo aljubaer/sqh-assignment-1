@@ -1,0 +1,38 @@
+.container {
+  margin: 0 auto;
+  padding: 20px;
+  height: calc(100vh - 60px);
+  width: 50%;
+  min-width: 400px;
+  background-color: rgb(218, 218, 218);
+  border-radius: 10px;
+}
+
+.list-title-container {
+  margin: 0px auto;
+  text-align: center;
+  height: 8%;
+}
+
+h1, h2 {
+  padding: 0px;
+  margin: 0px;
+}
+
+.list-container {
+  margin: 20px auto;
+  width: 90%;
+  height: 85%;
+  background-color: red;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.doctor-card {
+  height: 80px;
+  background-color: #ffffff;
+  border: 2px solid green;
+  border-radius: 4px;
+  margin: 8px;
+  cursor: pointer;
+}

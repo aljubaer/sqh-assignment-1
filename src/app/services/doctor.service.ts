@@ -19,17 +19,20 @@ export class DoctorService {
     };
   }
 
-  private formatDoctors(jsonDoctors: any): Doctor[] {
+  private formatDoctor(jsonDoctor): Doctor {
+    return new Doctor(
+      jsonDoctor.name,
+      jsonDoctor.org,
+      this.formatAvailability(jsonDoctor.availibility),
+      jsonDoctor.visitDurationInMin
+    );
+  }
+
+  private formatAllDoctors(jsonDoctors: any): Doctor[] {
     const doctors: Doctor[] = [];
 
     jsonDoctors.forEach((jsonDoctor) => {
-      const doctor: Doctor = new Doctor(
-        jsonDoctor.name,
-        jsonDoctor.org,
-        this.formatAvailability(jsonDoctor.availibility),
-        jsonDoctor.visitDurationInMin
-      );
-      console.log(doctor);
+      const doctor: Doctor = this.formatDoctor(jsonDoctor);
       doctors.push(doctor);
     });
 
@@ -37,6 +40,24 @@ export class DoctorService {
   }
 
   public getDoctors() {
-    return this.formatDoctors(this.fetchDoctors());
+    return this.formatAllDoctors(this.fetchDoctors());
+  }
+
+  public getDoctorByName(doctorName: string): Promise<Doctor> {
+    const doctors: Doctor[] = this.fetchDoctors();
+
+    const filterDoctors: Doctor[] = doctors.map(doctor => {
+      if (doctor.name === doctorName) {
+        return doctor;
+      }
+    });
+
+    return new Promise((resolve, reject) => {
+      if (filterDoctors.length > 0) {
+        resolve(filterDoctors[0]);
+      } else {
+        reject('No doctor found');
+      }
+    });
   }
 }

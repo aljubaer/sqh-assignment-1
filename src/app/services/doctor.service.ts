@@ -48,7 +48,7 @@ export class DoctorService {
 
     const filterDoctors: Doctor[] = doctors.map(doctor => {
       if (doctor.name === doctorName) {
-        return doctor;
+        return this.formatDoctor(doctor);
       }
     });
 

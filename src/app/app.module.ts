@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { DoctorListComponent } from './doctor-list/doctor-list.component';
 import { DoctorCardComponent } from './doctor-card/doctor-card.component';
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { AppointmentFormComponent } from './appointment-form/appointment-form.co
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

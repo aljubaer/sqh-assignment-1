@@ -1,0 +1,33 @@
+.container {
+  margin: 0 auto;
+  padding: 20px;
+  height: calc(100vh - 60px);
+  width: 50%;
+  min-width: 400px;
+  background-color: rgb(218, 218, 218);
+  border-radius: 10px;
+}
+
+.form-title-container {
+  margin: 0px auto;
+  text-align: center;
+  height: 8%;
+}
+
+h1, h2 {
+  padding: 0px;
+  margin: 0px;
+}
+
+.form-container {
+  margin: 20px auto;
+  width: 90%;
+  height: 85%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.dp-label{
+  width: 50%;
+}
+

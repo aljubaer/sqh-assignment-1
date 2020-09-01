@@ -22,7 +22,6 @@ export class DoctorListComponent implements OnInit {
   }
 
   onDoctorSelect(doctor: Doctor) {
-    console.log(doctor);
     this.router.navigate(['/appointment', doctor.name]);
   }
 }

@@ -29,5 +29,16 @@ h1, h2 {
 
 .dp-label{
   width: 50%;
+  padding-top: 8px;
+}
+
+.dropdownButton{
+  border: 1px solid black;
+}
+
+.custom-dropdown {
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
 }
 

@@ -11,3 +11,13 @@ export class Doctor {
     this.visitDurationInMin = visitDurationInMin;
   }
 }
+
+export class Slot {
+  startTime: string;
+  endTime: string;
+
+  constructor(startTime, endTime) {
+    this.startTime = startTime;
+    this.endTime = endTime;
+  }
+}

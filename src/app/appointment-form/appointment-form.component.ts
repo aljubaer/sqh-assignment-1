@@ -58,6 +58,7 @@ export class AppointmentFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("on init called");
     // tslint:disable-next-line: no-string-literal
     const doctorName = this.route.snapshot.params['name'];
     console.log(doctorName);

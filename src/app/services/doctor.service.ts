@@ -44,12 +44,10 @@ export class DoctorService {
   }
 
   public getDoctorByName(doctorName: string): Promise<Doctor> {
-    const doctors: Doctor[] = this.fetchDoctors();
+    const doctors: Doctor[] = this.getDoctors();
 
-    const filterDoctors: Doctor[] = doctors.map(doctor => {
-      if (doctor.name === doctorName) {
-        return this.formatDoctor(doctor);
-      }
+    const filterDoctors: Doctor[] = doctors.filter(doctor => {
+      return doctor.name === doctorName;
     });
 
     return new Promise((resolve, reject) => {

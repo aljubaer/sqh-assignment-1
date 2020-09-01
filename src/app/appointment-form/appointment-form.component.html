@@ -1,55 +1,117 @@
-<div class="container">
-  <div class="form-title-container">
-    <h1>Fill up the form...</h1>
+<div class="form-title-container">
+  <h1>Fill up the form...</h1>
+</div>
+<div *ngIf="isDoctorLoaded" class="form-container">
+  <div class="input-group mt-3">
+    <div class="dp-label">
+      <h6>Select an available day</h6>
+    </div>
+    <input
+      class="form-control"
+      placeholder="yyyy-mm-dd"
+      name="dp"
+      [(ngModel)]="dateModel"
+      ngbDatepicker
+      #d="ngbDatepicker"
+      [markDisabled]="isNotAvailable"
+      (ngModelChange)="onDateSelect(dateModel)"
+    />
+    <div class="input-group-append">
+      <button
+        class="btn btn-outline-secondary calendar"
+        (click)="d.toggle()"
+        type="button"
+      >
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
-  <div *ngIf="isDoctorLoaded" class="form-container">
-    <div class="input-group">
+  <div class="input-group mt-3">
+    <div class="dp-label">
+      <h6>Select an available time</h6>
+    </div>
+    <div ngbDropdown class="d-inline-block">
+      <button
+        class="btn btn-outline-dark dropdownButton"
+        id="slotsDropdown"
+        ngbDropdownToggle
+      >
+        {{ selectedTimeSlot }}
+      </button>
+      <div
+        ngbDropdownMenu
+        aria-labelledby="slotsDropdown"
+        class="custom-dropdown"
+      >
+        <button
+          *ngFor="let slot of availableTimeSlots"
+          ngbDropdownItem
+          (click)="onTimeSlotClick(slot)"
+        >
+          {{ slot }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <form *ngIf="isValidTimeSelected" #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <div class="input-group mt-3">
       <div class="dp-label">
-        <h6>Select an available day</h6>
+        <h6>Enter your name</h6>
       </div>
       <input
         class="form-control"
-        placeholder="yyyy-mm-dd"
-        name="dp"
-        [(ngModel)]="dateModel"
-        ngbDatepicker
-        #d="ngbDatepicker"
-        [markDisabled]="isNotAvailable"
-        (ngModelChange)="onDateSelect(dateModel)"
+        placeholder="Your name"
+        name="name"
+        [(ngModel)]="nameModel"
+        type="text"
       />
-      <div class="input-group-append">
-        <button
-          class="btn btn-outline-secondary calendar"
-          (click)="d.toggle()"
-          type="button"
-        >
-          <i class="fa fa-calendar" aria-hidden="true"></i>
-        </button>
-      </div>
     </div>
     <div class="input-group mt-3">
       <div class="dp-label">
-        <h6>Select an available time</h6>
+        <h6>Enter your number</h6>
       </div>
-      <div ngbDropdown class="d-inline-block">
-        <button
-          class="btn btn-outline-dark dropdownButton"
-          id="slotsDropdown"
-          ngbDropdownToggle
-        >
-          {{ selectedTimeSlot }}
-        </button>
-        <div ngbDropdownMenu aria-labelledby="slotsDropdown" class="custom-dropdown">
-          <button
-            *ngFor="let slot of availableTimeSlots"
-            ngbDropdownItem
-            (click)="onTimeSlotClick(slot)"
-          >
-            {{ slot }}
-          </button>
-        </div>
-      </div>
+      <input
+        class="form-control"
+        placeholder="Your number"
+        name="phone"
+        [(ngModel)]="phoneModel"
+        type="tel"
+        required
+      />
     </div>
-    <div></div>
-  </div>
+    <div class="input-group mt-3">
+      <div class="dp-label">
+        <h6>Enter your name</h6>
+      </div>
+      <textarea
+        class="form-control"
+        name="reason"
+        [(ngModel)]="reasonModel"
+        required
+        rows="4"
+      ></textarea>
+    </div>
+    <div class="custom-btn mb-3">
+      <button class="btn btn-success" type="submit" [disabled]="f.invalid">
+        Submit
+      </button>
+    </div>
+    <div
+      *ngIf="f.valid && isFormSubmitted"
+      class="alert alert-warning alert-dismissible fade"
+      role="alert"
+    >
+      <p>Your appointment request successfully submitted!</p>
+      <p>Doctor name: {{ doctor.name }}</p>
+      <p>Time: {{ selectedDate }} {{ selectedTimeSlot }}</p>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </form>
 </div>

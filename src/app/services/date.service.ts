@@ -8,6 +8,7 @@ export class DateService {
   constructor() { }
 
   public convertWeekdayToNumber(day: string): number {
+    // tslint:disable: object-literal-key-quotes
     const weekDaysMap = {
       'mon': 1,
       'tue': 2,

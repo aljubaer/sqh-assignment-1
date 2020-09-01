@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../services/doctor.service';
 
 import * as moment from 'moment';
@@ -11,6 +11,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { Doctor, Slot } from '../models/doctor.model';
 import { DateService } from '../services/date.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-appointment-form',
@@ -19,11 +20,18 @@ import { DateService } from '../services/date.service';
 })
 export class AppointmentFormComponent implements OnInit {
   dateModel: NgbDateStruct;
+  nameModel = '';
+  phoneModel = '';
+  reasonModel = '';
 
   doctor: Doctor = null;
   isDoctorLoaded = false;
   availableTimeSlots: string[] = [];
+  selectedDate = '';
   selectedTimeSlot = 'Select a time';
+  isValidTimeSelected = false;
+  isFormSubmitted = false;
+
 
   isNotAvailable = (date: NgbDate) => {
     let isfound = true;
@@ -43,12 +51,14 @@ export class AppointmentFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private doctorService: DoctorService,
     private dateService: DateService,
     private calendar: NgbCalendar
   ) {}
 
   ngOnInit(): void {
+    // tslint:disable-next-line: no-string-literal
     const doctorName = this.route.snapshot.params['name'];
     console.log(doctorName);
     this.loadDoctor(doctorName);
@@ -65,25 +75,40 @@ export class AppointmentFormComponent implements OnInit {
     }
   }
 
+  onSubmit(form: NgForm) {
+    this.isFormSubmitted = true;
+    const successMsg = `Your appointment request successfully submitted!\n
+    Doctor name: ${ this.doctor.name }\n
+    Time: ${ this.selectedDate } ${ this.selectedTimeSlot }`;
+    alert(successMsg);
+    this.router.navigate(['']);
+  }
+
   onDateSelect(date) {
+    this.isValidTimeSelected = false;
+    this.selectedTimeSlot = 'Select a time';
     const dateString = this.dateService.convertDateToString(date);
-    console.log(dateString);
+    this.selectedDate = dateString;
     const weekDay = moment(dateString, 'DD-MM-YYYY').isoWeekday();
-    console.log(weekDay);
     this.selectedTimeSlot = 'Select a time';
     this.getAvailableSlots(this.dateService.convertWeekdayToString(weekDay));
   }
 
   onTimeSlotClick(slot) {
-    this.selectedTimeSlot = slot;
+    if (this.isValidTime(slot)) {
+      this.isValidTimeSelected = true;
+      this.selectedTimeSlot = slot;
+    }
+  }
+
+  private isValidTime(time: string) {
+    return moment(time, 'hh:mm A').isValid();
   }
 
   private getAvailableSlots(weekDay: string) {
-    console.log(weekDay);
     const availableTime: Slot = this.parseSlotRange(
       this.doctor.availability[weekDay]
     );
-    console.log(availableTime);
     const startTime = moment(availableTime.startTime, 'hh:mm A');
     const endTime = moment(availableTime.endTime, 'hh:mm A');
     const duration = moment.duration(15, 'minutes');

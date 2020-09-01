@@ -1,14 +1,15 @@
-<div class="container">
-  <div class="list-title-container">
-    <h1>Choose your doctor here...</h1>
-  </div>
-  <div class="list-container">
-    <div
-      class="doctor-card"
-      *ngFor="let doctor of doctors"
-      (click)="onDoctorSelect(doctor)"
-    >
-      <h2>{{ doctor.name }}</h2>
+<div class="list-title-container">
+  <h1>Choose your doctor here...</h1>
+</div>
+<div class="list-container">
+  <div
+    class="doctor-card"
+    *ngFor="let doctor of doctors"
+    (click)="onDoctorSelect(doctor)"
+  >
+    <div style="margin: 8px">
+      <h3>{{ doctor.name }}</h3>
+      <h6>{{ doctor.org }}</h6>
     </div>
   </div>
 </div>

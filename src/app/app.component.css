@@ -1,0 +1,9 @@
+.container {
+  margin: 20 auto;
+  padding: 20px;
+  height: calc(100vh - 40px);
+  width: 50%;
+  min-width: 400px;
+  background-color: rgb(218, 218, 218);
+  border-radius: 10px;
+}
